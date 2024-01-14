@@ -8,10 +8,13 @@ export default function Home() {
       <Head>
         <title>Next.js Starter!</title>
         <link rel="icon" href="/favicon.ico" />
+        <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
       </Head>
 
       <main>
         <Header title="Welcome to my app!" />
+        <div data-netlify-identity-menu></div>
+        <div data-netlify-identity-button>Login with Netlify Identity</div>
         <p className="description">
           Get started by editing <code>pages/index.js</code>
         </p>
