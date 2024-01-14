@@ -49,13 +49,13 @@ export default function SettingPage() {
             >Log out.</button>
 
 <div class="container-fluid">
-        <table class="table" style="max-width: 28em;">
+        <table class="table">
           <thead>
-            <tr><th scope="col" style="min-width: 7.5em;">Choose App: </th>
+            <tr><th scope="col">Choose App: </th>
               <th scope="col">
                 <div class="btn-group">
                   <button class="btn btn-outline-info btn-sm dropdown-toggle text-end" type="button" 
-                    data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 7.5em;">app name</button>
+                    data-bs-toggle="dropdown" aria-expanded="false">app name</button>
                   <ul class="dropdown-menu" id="appDropdown">
                   </ul>
                 </div>
@@ -71,7 +71,7 @@ export default function SettingPage() {
               <td>
                 <div class="btn-group">
                     <button class="btn btn-outline-info btn-sm dropdown-toggle text-end" type="button" 
-                      data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 7.5em;">choose one</button>
+                      data-bs-toggle="dropdown" aria-expanded="false">choose one</button>
                     <ul class="dropdown-menu" id="tfDropdown">
                       <li id="tf1" value="15">15m</li>
                       <li id="tf2" value="30">30m</li>
