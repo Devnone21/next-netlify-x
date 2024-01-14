@@ -34,9 +34,9 @@ export default function Protected() {
 
       {loggedIn ? (
         <main>
-          <Header text={'Welcome to the Private Space™'} />
+          <Header title={'Welcome to the Private Space™'} />
           <p className="description">
-            Wow, secrets are super cool. Welcome {user?.user_metadata.full_name}!
+            Wow, welcome {user?.user_metadata.full_name}!
           </p>
           <button
             onClick={() => {
@@ -48,10 +48,14 @@ export default function Protected() {
           >
             Log out.
           </button>
+          <p>Still Continue? </p>
+          <Link href="/x-setting">
+              <a>Go to Setting</a>
+          </Link>
         </main>
       ) : (
         <main>
-          <p>YOU ARE NOT ALLOWED HERE.</p>
+          <p>YOU ARE NOT ALLOWED HERE. </p>
           <Link href="/">
             <a>Go back to the grody public space.</a>
           </Link>
@@ -59,39 +63,6 @@ export default function Protected() {
       )}
 
       <Footer />
-
-      <style jsx>{`
-        .container {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
   )
 }
