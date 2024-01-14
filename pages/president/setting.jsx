@@ -5,9 +5,9 @@ import Link from 'next/link'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 
-import netlifyAuth from '../netlifyAuth.js'
+import netlifyAuth from '../../netlifyAuth.js'
 
-export default function Protected() {
+export default function SettingPage() {
   let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated)
   let [user, setUser] = useState(null)
 

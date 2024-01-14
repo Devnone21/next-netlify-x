@@ -49,7 +49,7 @@ export default function Protected() {
             Log out.
           </button>
           <p>Still Continue? </p>
-          <Link href="/x-setting">
+          <Link href="/president/setting">
               <a>Go to Setting</a>
           </Link>
         </main>
