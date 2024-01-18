@@ -1,8 +1,8 @@
 async function getSettings(host, id) {
   const response = await fetch(host+'?k='+id);
   const data = await response.json();
-  console.log(`get: ${data}`);
-  return data.settings;
+  console.log(`get: ${JSON.stringify(data)}`);
+  return data.profiles;
 }
 
 async function putSettings(host, id, value) {
@@ -11,8 +11,8 @@ async function putSettings(host, id, value) {
         { method: "PUT", body: JSON.stringify({rayId: rayId, _comment: comment, settings: value}), 
         headers: {'Content-Type': 'application/json'} });
   const data = await response.json();
-  console.log(`put: ${data}`)
-  return data.settings;
+  console.log(`put: ${JSON.stringify(data)}`)
+  return data.profiles;
 }
 
 const elm = (id) => document.getElementById(id);
@@ -29,7 +29,6 @@ if (document.readyState !== 'loading') {
 }
 
 async function initSettings() {
-    console.log(ENV_);
     profiles = await getSettings(ENV_['APIURL'], ENV_['RAYID']);
     console.log(profiles);
     const selectClasses = "form-select shadow-none row border-top".split(' ');

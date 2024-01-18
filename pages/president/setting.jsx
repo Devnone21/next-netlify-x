@@ -10,7 +10,7 @@ import netlifyAuth from '../../netlifyAuth.js'
 async function getSettings(host, id) {
   const response = await fetch(host+'?k='+id);
   const data = await response.json();
-  return data.settings;
+  return data.profiles;
 }
 
 export default function SettingPage() {
@@ -18,7 +18,9 @@ export default function SettingPage() {
   let [user, setUser] = useState(null)
   const rayId = process.env.NEXT_PUBLIC_RAYID;
   const apiUrl = process.env.NEXT_PUBLIC_APIURL;
+  // const profiles = await getSettings(apiUrl, rayId);
   console.log(`id:${rayId}, host:${apiUrl}`);
+  // console.log(`profiles:${profiles}`)
   useEffect(() => {
     let isCurrent = true
     netlifyAuth.initialize((user) => {
