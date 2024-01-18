@@ -43,8 +43,8 @@ async function initSettings() {
         let appDropdown = elm('appDropdown');
         profiles.forEach(element => {
             let opt = document.createElement("option");
-            opt.setAttribute("value", element.appName);
-            opt.textContent = element.appName;
+            opt.setAttribute("value", element.name);
+            opt.textContent = element.name;
             appDropdown.appendChild(opt);
         });
         appDropdown.addEventListener("change", reflectSetting);
@@ -61,25 +61,25 @@ function reflectSetting() {
         elm('tableSetting').classList.add("visually-hidden");
         return false;
     }
-    const appIndex = profiles.findIndex(o => o.appName === appName);
+    const appIndex = profiles.findIndex(o => o.name === appName);
     elm('currentAppIndex').value = appIndex;
-    const setting = profiles[appIndex].setting;
-    elm('accDropdown').value = setting.account;
-    elm('tfDropdown').value  = setting.timeframe;
-    elm('vlDropdown').value  = setting.volume;
-    elm('tpDropdown').value  = setting.rate_tp;
-    elm('slDropdown').value  = setting.rate_sl;
-    elm('indDropdown').value = setting.indicator;
+    const param = profiles[appIndex].param;
+    elm('accDropdown').value = param.account;
+    elm('tfDropdown').value  = param.timeframe;
+    elm('vlDropdown').value  = param.volume;
+    elm('tpDropdown').value  = param.rate_tp;
+    elm('slDropdown').value  = param.rate_sl;
+    elm('indDropdown').value = param.indicator;
     // preset option depends on indicator
     updateOptionPreset();
-    elm('presetDropdown').value = setting.indPreset;
+    elm('presetDropdown').value = param.ind_preset;
     // smb state
     ENV_['SB'].forEach(sb => {
-        elm(sb).checked = setting.symbols.includes(sb)
+        elm(sb).checked = param.symbols.includes(sb)
     });
     // breaker
-    elm('brkSwitch').checked = setting.breaker;
-    elm('brkStatus').textContent = (setting.breaker)? "current: ON" : "current: OFF";
+    elm('brkSwitch').checked = param.breaker;
+    elm('brkStatus').textContent = (param.breaker)? "current: ON" : "current: OFF";
     // unhide
     elm('tableSetting').classList.remove("visually-hidden");
     return true;
@@ -112,7 +112,7 @@ function createBtnCheck(groupId, list) {
 }
 
 function generateSetting() {
-    const setting = {
+    const param = {
         account : elm('accDropdown').value,
         breaker : elm('brkSwitch').checked,
         symbols : ENV_['SB'].filter(sb => elm(sb).checked),
@@ -123,18 +123,18 @@ function generateSetting() {
         indicator : elm('indDropdown').value,
         indPreset : elm('presetDropdown').value
     }
-    return setting;
+    return param;
 }
 
 function previewSetting() {
-    const setting = generateSetting();
-    elm('previewSettings').textContent = JSON.stringify(setting, undefined, 2);
+    const param = generateSetting();
+    elm('previewSettings').textContent = JSON.stringify(param, undefined, 2);
 }
 
 async function putSetting() {
-    const setting = generateSetting();
+    const param = generateSetting();
     const appIndex = elm('currentAppIndex').value;
-    profiles[appIndex].setting = setting;
+    profiles[appIndex].param = param;
     profiles = await putSettings(ENV_['APIURL'], ENV_['RAYID'], profiles);
     console.log(profiles);
     reflectSetting();
