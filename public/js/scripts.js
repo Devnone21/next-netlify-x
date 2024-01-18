@@ -13,17 +13,6 @@ async function putSettings(host, id, value) {
   return data.settings;
 }
 
-// const ENV_RAYID  = process.env.RAYID;
-// const ENV_APIURL = process.env.APIURL;
-// const ENV_ACC = process.env.ACC.split(' ');
-// const ENV_TF  = process.env.TF.split(' ').map(s => +s);
-// const ENV_VL  = process.env.VL.split(' ').map(s => parseFloat(s));
-// const ENV_TP  = process.env.TP.split(' ').map(s => parseFloat(s));
-// const ENV_SL  = process.env.SL.split(' ').map(s => parseFloat(s));
-// const ENV_SB  = process.env.SB.split(' ');
-// const ENV_IND = process.env.IND.split(' ');
-// const ENV_PSET = JSON.parse(process.env.PSET);
-
 const elm = (id) => document.getElementById(id);
 let profiles;
 

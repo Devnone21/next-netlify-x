@@ -31,7 +31,6 @@ export default function SettingPage() {
         <title>X Setting - President Only</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="/css/style.min.css" rel="stylesheet" />
-        <script>var ENV_=JSON.parse({process.env.OPTS});</script>
         <script src="/js/scripts.js"></script>
       </Head>
 
