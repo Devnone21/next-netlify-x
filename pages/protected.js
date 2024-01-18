@@ -34,9 +34,9 @@ export default function Protected() {
 
       {loggedIn ? (
         <main>
-          <Header title={'Welcome to the Private Space™'} />
+          <Header title={'Private Space™'} />
           <p className="description">
-            Wow, welcome {user?.user_metadata.full_name}!
+            Welcome {user?.user_metadata.full_name}!
           </p>
           <button
             onClick={() => {

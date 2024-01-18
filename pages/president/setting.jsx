@@ -30,75 +30,96 @@ export default function SettingPage() {
       <Head>
         <title>X Setting - President Only</title>
         <link rel="icon" href="/favicon.ico" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-        </script>
+        <link href="/css/style.min.css" rel="stylesheet" />
+        <script src="/js/scripts.js"></script>
       </Head>
 
       {loggedIn ? (
         <main>
-          <Header title={'Welcome to the Private Space™'} />
+          <Header title={'Private Space™'} />
           <p className="description">
-            Wow, secrets are super cool. Welcome {user?.user_metadata.full_name}!
+            Welcome {user?.user_metadata.full_name}!
           </p>
           <button onClick={() => {
               netlifyAuth.signout(() => {setLoggedIn(false); setUser(null);})
             }}
             >Log out.</button>
 
-<div class="container-fluid">
-        <table class="table">
+      <div class="container-fluid table-responsive pt-3">
+        <table class="table table-sm no-wrap">
           <thead>
-            <tr><th scope="col">Choose App: </th>
+            <tr class="table-primary">
+              <th scope="col"><h3 class="box-title mb-0 strong">App Profile: </h3></th>
               <th scope="col">
-                <div class="btn-group">
-                  <button class="btn btn-outline-info btn-sm dropdown-toggle text-end" type="button" 
-                    data-bs-toggle="dropdown" aria-expanded="false">app name</button>
-                  <ul class="dropdown-menu" id="appDropdown">
-                  </ul>
-                </div>
+                <select name="app" id="appDropdown">
+                    <option selected disabled value="">choose one</option>
+                </select>
               </th>
             </tr>
           </thead>
 
-          <tbody class="table-group-divider">
-            <tr><th scope="row">Symbol: </th>
-              <td>Multi-select</td>
-            </tr>
-            <tr><th scope="row">Time Frame: </th>
+          <tbody id="tableSetting" class="visually-hidden">
+            <tr><th scope="row">Breaker: </th>
               <td>
-                <div class="btn-group">
-                    <button class="btn btn-outline-info btn-sm dropdown-toggle text-end" type="button" 
-                      data-bs-toggle="dropdown" aria-expanded="false">choose one</button>
-                    <ul class="dropdown-menu" id="tfDropdown">
-                      <li id="tf1" value="15">15m</li>
-                      <li id="tf2" value="30">30m</li>
-                      <li id="tf3" value="60">1H</li>
-                      <li id="tf4" value="240">4H</li>
-                    </ul>
-                  </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="brkSwitch"/>
+                    <label class="form-check-label" id="brkStatus" for="brkSwitch">Active</label>
+                </div>
               </td>
             </tr>
-
-            <tr><th scope="row">Rate TP: <br/><small>(of price)</small></th>
-              <td>Dropdown</td>
+            <tr><th scope="row">Account: </th>
+              <td><select name="account" id="accDropdown"></select></td>
             </tr>
-            <tr><th scope="row">Rate SL: <br/><small>(of price)</small></th>
-              <td>Dropdown</td>
+
+            <tr><th scope="row">Symbols: </th>
+              <td><div class="btn-group-sm" role="group" id="sbBtncheck" aria-label="sb"></div></td>
+            </tr>
+            <tr><th scope="row">Time Frame: </th>
+              <td><select name="timeframe" id="tfDropdown"></select></td>
+            </tr>
+            <tr><th scope="row">Volume: </th>
+              <td><select name="volume" id="vlDropdown"></select></td>
+            </tr>
+  
+            <tr><th scope="row">Rate T/P: <br/><small>(of price)</small></th>
+              <td><select name="rate_tp" id="tpDropdown"></select></td>
+            </tr>
+            <tr><th scope="row">Rate S/L: <br/><small>(of price)</small></th>
+              <td><select name="rate_sl" id="slDropdown"></select></td>
             </tr>
 
             <tr><th scope="row">Indicator: </th>
-              <td>Dropdown</td>
+              <td><select name="indicator" id="indDropdown"></select></td>
             </tr>
             <tr><th scope="row">Ind. Preset: </th>
-              <td>Dropdown</td>
+              <td><select name="indicatorPreset" id="presetDropdown"></select></td>
+            </tr>
+
+            <tr>
+                <th scope="row">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <input type="text" id="currentAppIndex" value="" disabled hidden />
+                    </div>
+                </th>
+                <td>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button id="btnPreview" class="btn btn-warning visually-hidden">Preview</button>
+                        <button id="btnSave" class="btn btn-success">Save Profile</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="container-fluid">
+                        <textarea class="w-100" id="previewSettings" row="5" disabled hidden></textarea>
+                    </div>
+                </td>
             </tr>
 
           </tbody>
         </table>
       </div>
+
           
         </main>
       ) : (

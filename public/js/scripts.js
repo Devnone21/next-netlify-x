@@ -1,0 +1,140 @@
+async function getSettings(host, id) {
+  const response = await fetch(host+'?k='+id);
+  const data = await response.json();
+  return data.settings;
+}
+
+async function putSettings(host, id, value) {
+  const comment = "From putSettings";
+  const response = await fetch(host+'?k='+id, 
+        { method: "PUT", body: JSON.stringify({rayId: rayId, _comment: comment, settings: value}), 
+        headers: {'Content-Type': 'application/json'} });
+  const data = await response.json();
+  return data.settings;
+}
+
+const ENV_RAYID  = process.env.RAYID;
+const ENV_APIURL = process.env.APIURL;
+const ENV_ACC = process.env.ACC;
+const ENV_TF  = process.env.TF;
+const ENV_VL  = process.env.VL;
+const ENV_TP  = process.env.TP;
+const ENV_SL  = process.env.SL;
+const ENV_SB  = process.env.SB;
+const ENV_IND = process.env.IND;
+const ENV_PSET = process.env.PSET;
+
+const elm = (id) => document.getElementById(id);
+let profiles;
+
+window.addEventListener('DOMContentLoaded', async (event) => {
+    profiles = await getSettings(ENV_APIURL, ENV_RAYID);
+    console.log(profiles);
+    const selectClasses = "form-select shadow-none row border-top".split(' ');
+    document.querySelectorAll('select').forEach(el=>el.classList.add(...selectClasses));
+    createOptions("accDropdown", ENV_ACC);
+    createOptions("tfDropdown",  ENV_TF);
+    createOptions("vlDropdown",  ENV_VL);
+    createOptions("tpDropdown",  ENV_TP);
+    createOptions("slDropdown",  ENV_SL);
+    createOptions("indDropdown", ENV_IND);
+    if (profiles.length >0) {
+        let appDropdown = elm('appDropdown');
+        profiles.forEach(element => {
+            let opt = document.createElement("option");
+            opt.setAttribute("value", element.appName);
+            opt.textContent = element.appName;
+            appDropdown.appendChild(opt);
+        });
+        appDropdown.addEventListener("change", reflectSetting);
+    }
+    elm('indDropdown').addEventListener("change", updateOptionPreset);
+    elm('btnPreview').addEventListener("click", previewSetting);
+    elm('btnSave').addEventListener("click", putSetting);
+    createBtnCheck("sbBtncheck", ENV_SB);
+});
+
+function reflectSetting() {
+    const appName = elm('appDropdown').value;
+    if (appName == '') { 
+        elm('tableSetting').classList.add("visually-hidden");
+        return false;
+    }
+    const appIndex = profiles.findIndex(o => o.appName === appName);
+    elm('currentAppIndex').value = appIndex;
+    const setting = profiles[appIndex].setting;
+    elm('accDropdown').value = setting.account;
+    elm('tfDropdown').value  = setting.timeframe;
+    elm('vlDropdown').value  = setting.volume;
+    elm('tpDropdown').value  = setting.rate_tp;
+    elm('slDropdown').value  = setting.rate_sl;
+    elm('indDropdown').value = setting.indicator;
+    // preset option depends on indicator
+    updateOptionPreset();
+    elm('presetDropdown').value = setting.indPreset;
+    // smb state
+    ENV_SB.forEach(sb => {
+        elm(sb).checked = setting.symbols.includes(sb)
+    });
+    // breaker
+    elm('brkSwitch').checked = setting.breaker;
+    elm('brkStatus').textContent = (setting.breaker)? "current: ON" : "current: OFF";
+    // unhide
+    elm('tableSetting').classList.remove("visually-hidden");
+    return true;
+}
+
+function updateOptionPreset() {
+    const indicator = elm('indDropdown').value;
+    const preset = ENV_PSET[indicator];
+    elm('presetDropdown').textContent = '';
+    createOptions('presetDropdown', preset);
+}
+
+function createOptions(dropdownId, list) {
+    let dropdown = elm(dropdownId);
+    list.forEach(element => {
+        let opt = document.createElement("option");
+        opt.setAttribute("value", element);
+        opt.textContent = element;
+        dropdown.appendChild(opt);
+    });
+}
+
+function createBtnCheck(groupId, list) {
+    let arr = list.map(sb => `
+        <input type="checkbox" class="btn-check" id="${sb}" autocomplete="off">
+        <label class="btn btn-outline-primary" for="${sb}">${sb}</label>
+    `);
+    arr.splice(3, 0, "<br/>");
+    elm(groupId).innerHTML = `${arr.join('')}`;
+}
+
+function generateSetting() {
+    const setting = {
+        account : elm('accDropdown').value,
+        breaker : elm('brkSwitch').checked,
+        symbols : ENV_SB.filter(sb => elm(sb).checked),
+        timeframe : elm('tfDropdown').value,
+        volume  : elm('vlDropdown').value,
+        rate_tp : elm('tpDropdown').value,
+        rate_sl : elm('slDropdown').value,
+        indicator : elm('indDropdown').value,
+        indPreset : elm('presetDropdown').value
+    }
+    return setting;
+}
+
+function previewSetting() {
+    const setting = generateSetting();
+    elm('previewSettings').textContent = JSON.stringify(setting, undefined, 2);
+}
+
+async function putSetting() {
+    const setting = generateSetting();
+    const appIndex = elm('currentAppIndex').value;
+    profiles[appIndex].setting = setting;
+    profiles = await putSettings(ENV_APIURL, ENV_RAYID, profiles);
+    console.log(profiles);
+    reflectSetting();
+}

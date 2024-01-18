@@ -3,9 +3,9 @@ import Link from 'next/link'
 const About = () => {
   return (
     <div>
-      <p>This is about page</p>
+      <p className="description">This is about page</p>
 
-      <Link href="/">Back to Home</Link>
+      <Link href="/"><a>Back to Home</a></Link>
     </div>
   )
 }
