@@ -16,7 +16,17 @@ async function putSettings(host, id, value) {
 const elm = (id) => document.getElementById(id);
 let profiles;
 
-window.addEventListener('DOMContentLoaded', async (event) => {
+if (document.readyState !== 'loading') {
+    console.log('document is already ready, just execute code here');
+    initSettings();
+} else {
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('document was not ready, place code here');
+        initSettings();
+    });
+}
+
+async function initSettings() {
     profiles = await getSettings(ENV_['APIURL'], ENV_['RAYID']);
     console.log(profiles);
     const selectClasses = "form-select shadow-none row border-top".split(' ');
@@ -41,7 +51,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     elm('btnPreview').addEventListener("click", previewSetting);
     elm('btnSave').addEventListener("click", putSetting);
     createBtnCheck("sbBtncheck", ENV_['SB']);
-});
+}
 
 function reflectSetting() {
     const appName = elm('appDropdown').value;
