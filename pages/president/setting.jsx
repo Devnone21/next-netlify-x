@@ -10,7 +10,9 @@ import netlifyAuth from '../../netlifyAuth.js'
 export default function SettingPage() {
   let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated)
   let [user, setUser] = useState(null)
-
+  const rayId = process.env.RAYID;
+  const apiUrl = process.env.APIURL;
+  console.log(`id:${rayId}, host:${apiUrl}`);
   useEffect(() => {
     let isCurrent = true
     netlifyAuth.initialize((user) => {

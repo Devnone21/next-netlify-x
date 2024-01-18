@@ -27,6 +27,7 @@ if (document.readyState !== 'loading') {
 }
 
 async function initSettings() {
+    console.log(ENV_);
     profiles = await getSettings(ENV_['APIURL'], ENV_['RAYID']);
     console.log(profiles);
     const selectClasses = "form-select shadow-none row border-top".split(' ');
