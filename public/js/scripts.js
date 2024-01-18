@@ -13,31 +13,31 @@ async function putSettings(host, id, value) {
   return data.settings;
 }
 
-const ENV_RAYID  = process.env.RAYID;
-const ENV_APIURL = process.env.APIURL;
-const ENV_ACC = process.env.ACC;
-const ENV_TF  = process.env.TF;
-const ENV_VL  = process.env.VL;
-const ENV_TP  = process.env.TP;
-const ENV_SL  = process.env.SL;
-const ENV_SB  = process.env.SB;
-const ENV_IND = process.env.IND;
-const ENV_PSET = process.env.PSET;
+// const ENV_RAYID  = process.env.RAYID;
+// const ENV_APIURL = process.env.APIURL;
+// const ENV_ACC = process.env.ACC.split(' ');
+// const ENV_TF  = process.env.TF.split(' ').map(s => +s);
+// const ENV_VL  = process.env.VL.split(' ').map(s => parseFloat(s));
+// const ENV_TP  = process.env.TP.split(' ').map(s => parseFloat(s));
+// const ENV_SL  = process.env.SL.split(' ').map(s => parseFloat(s));
+// const ENV_SB  = process.env.SB.split(' ');
+// const ENV_IND = process.env.IND.split(' ');
+// const ENV_PSET = JSON.parse(process.env.PSET);
 
 const elm = (id) => document.getElementById(id);
 let profiles;
 
 window.addEventListener('DOMContentLoaded', async (event) => {
-    profiles = await getSettings(ENV_APIURL, ENV_RAYID);
+    profiles = await getSettings(ENV_['APIURL'], ENV_['RAYID']);
     console.log(profiles);
     const selectClasses = "form-select shadow-none row border-top".split(' ');
     document.querySelectorAll('select').forEach(el=>el.classList.add(...selectClasses));
-    createOptions("accDropdown", ENV_ACC);
-    createOptions("tfDropdown",  ENV_TF);
-    createOptions("vlDropdown",  ENV_VL);
-    createOptions("tpDropdown",  ENV_TP);
-    createOptions("slDropdown",  ENV_SL);
-    createOptions("indDropdown", ENV_IND);
+    createOptions("accDropdown", ENV_['ACC']);
+    createOptions("tfDropdown",  ENV_['TF']);
+    createOptions("vlDropdown",  ENV_['VL']);
+    createOptions("tpDropdown",  ENV_['TP']);
+    createOptions("slDropdown",  ENV_['SL']);
+    createOptions("indDropdown", ENV_['IND']);
     if (profiles.length >0) {
         let appDropdown = elm('appDropdown');
         profiles.forEach(element => {
@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     elm('indDropdown').addEventListener("change", updateOptionPreset);
     elm('btnPreview').addEventListener("click", previewSetting);
     elm('btnSave').addEventListener("click", putSetting);
-    createBtnCheck("sbBtncheck", ENV_SB);
+    createBtnCheck("sbBtncheck", ENV_['SB']);
 });
 
 function reflectSetting() {
@@ -73,7 +73,7 @@ function reflectSetting() {
     updateOptionPreset();
     elm('presetDropdown').value = setting.indPreset;
     // smb state
-    ENV_SB.forEach(sb => {
+    ENV_['SB'].forEach(sb => {
         elm(sb).checked = setting.symbols.includes(sb)
     });
     // breaker
@@ -86,7 +86,7 @@ function reflectSetting() {
 
 function updateOptionPreset() {
     const indicator = elm('indDropdown').value;
-    const preset = ENV_PSET[indicator];
+    const preset = ENV_['PSET'][indicator];
     elm('presetDropdown').textContent = '';
     createOptions('presetDropdown', preset);
 }
@@ -114,7 +114,7 @@ function generateSetting() {
     const setting = {
         account : elm('accDropdown').value,
         breaker : elm('brkSwitch').checked,
-        symbols : ENV_SB.filter(sb => elm(sb).checked),
+        symbols : ENV_['SB'].filter(sb => elm(sb).checked),
         timeframe : elm('tfDropdown').value,
         volume  : elm('vlDropdown').value,
         rate_tp : elm('tpDropdown').value,
@@ -134,7 +134,7 @@ async function putSetting() {
     const setting = generateSetting();
     const appIndex = elm('currentAppIndex').value;
     profiles[appIndex].setting = setting;
-    profiles = await putSettings(ENV_APIURL, ENV_RAYID, profiles);
+    profiles = await putSettings(ENV_['APIURL'], ENV_['RAYID'], profiles);
     console.log(profiles);
     reflectSetting();
 }
