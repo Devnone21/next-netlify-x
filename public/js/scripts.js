@@ -50,7 +50,7 @@ async function initSettings() {
         appDropdown.addEventListener("change", reflectSetting);
     }
     elm('indDropdown').addEventListener("change", updateOptionPreset);
-    elm('btnPreview').addEventListener("click", previewSetting);
+    // elm('btnPreview').addEventListener("click", previewSetting);
     elm('btnSave').addEventListener("click", putSetting);
     createBtnCheck("sbBtncheck", ENV_['SB']);
 }

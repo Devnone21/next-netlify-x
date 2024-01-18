@@ -118,13 +118,6 @@ export default function SettingPage() {
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="container-fluid">
-                        <textarea class="w-100" id="previewSettings" row="5" disabled hidden></textarea>
-                    </div>
-                </td>
-            </tr>
 
           </tbody>
         </table>
