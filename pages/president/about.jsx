@@ -1,4 +1,8 @@
+import Head from 'next/head'
 import Link from 'next/link'
+
+import Header from '@components/Header'
+import Footer from '@components/Footer'
 
 const About = () => {
   return (
@@ -8,9 +12,10 @@ const About = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-      <p className="description">This is about page</p>
+        <Header title={'Nowhere Space™'} />
+        <p className="description">This is about page</p>
 
-      <Link href="/"><a>Back to Home</a></Link>
+        <Link href="/"><a>Back to Home</a></Link>
       </main>
       <Footer />
     </div>
