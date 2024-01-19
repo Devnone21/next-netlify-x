@@ -28,7 +28,7 @@ export default function Protected() {
   return (
     <div className="container">
       <Head>
-        <title>Members Only</title>
+        <title>Control Center X</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -38,7 +38,7 @@ export default function Protected() {
           <p className="description">
             Welcome {user?.user_metadata.full_name}!
           </p>
-          <button
+          <button class="btn btn-danger" 
             onClick={() => {
               netlifyAuth.signout(() => {
                 setLoggedIn(false)

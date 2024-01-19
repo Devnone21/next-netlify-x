@@ -121,7 +121,7 @@ function generateSetting() {
         rate_tp : elm('tpDropdown').value,
         rate_sl : elm('slDropdown').value,
         indicator : elm('indDropdown').value,
-        indPreset : elm('presetDropdown').value
+        ind_preset : elm('presetDropdown').value
     }
     return param;
 }

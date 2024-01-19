@@ -38,7 +38,7 @@ export default function SettingPage() {
   return (
     <div className="container">
       <Head>
-        <title>X Setting - President Only</title>
+        <title>Control Center X - President Only</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="/css/style.min.css" rel="stylesheet" />
         <script src="/js/scripts.js"></script>
@@ -47,10 +47,7 @@ export default function SettingPage() {
       {loggedIn ? (
         <main>
           <Header title={'Private Space™'} />
-          <p className="description">
-            Welcome {user?.user_metadata.full_name}!
-          </p>
-          <button onClick={() => {
+          <button class="btn btn-danger" onClick={() => {
               netlifyAuth.signout(() => {setLoggedIn(false); setUser(null);})
             }}
             >Log out.</button>
