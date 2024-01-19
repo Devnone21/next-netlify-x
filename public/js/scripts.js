@@ -116,10 +116,10 @@ function generateSetting() {
         account : elm('accDropdown').value,
         breaker : elm('brkSwitch').checked,
         symbols : ENV_['SB'].filter(sb => elm(sb).checked),
-        timeframe : elm('tfDropdown').value,
-        volume  : elm('vlDropdown').value,
-        rate_tp : elm('tpDropdown').value,
-        rate_sl : elm('slDropdown').value,
+        timeframe : parseInt(elm('tfDropdown').value),
+        volume  : parseFloat(elm('vlDropdown').value),
+        rate_tp : parseFloat(elm('tpDropdown').value),
+        rate_sl : parseFloat(elm('slDropdown').value),
         indicator : elm('indDropdown').value,
         ind_preset : elm('presetDropdown').value
     }

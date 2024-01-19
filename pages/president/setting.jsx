@@ -18,9 +18,6 @@ export default function SettingPage() {
   let [user, setUser] = useState(null)
   const rayId = process.env.NEXT_PUBLIC_RAYID;
   const apiUrl = process.env.NEXT_PUBLIC_APIURL;
-  // const profiles = await getSettings(apiUrl, rayId);
-  console.log(`id:${rayId}, host:${apiUrl}`);
-  // console.log(`profiles:${profiles}`)
   useEffect(() => {
     let isCurrent = true
     netlifyAuth.initialize((user) => {
