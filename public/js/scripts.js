@@ -8,7 +8,7 @@ async function getSettings(host, id) {
 async function putSettings(host, id, value) {
   const comment = "From putSettings";
   const response = await fetch(host+'?k='+id, 
-        { method: "PUT", body: JSON.stringify({rayId: rayId, _comment: comment, settings: value}), 
+        { method: "PUT", body: JSON.stringify({rayId: ENV_['RAYID'], _comment: comment, profiles: value}), 
         headers: {'Content-Type': 'application/json'} });
   const data = await response.json();
   console.log(`put: ${JSON.stringify(data)}`)
