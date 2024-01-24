@@ -30,7 +30,6 @@ export default function SettingPage() {
         <title>Control Center X - President Only</title>
         <link rel="icon" href="/favicon.ico" />
         <link href="/css/style.min.css" rel="stylesheet" />
-        <script src="/js/scripts.js"></script>
       </Head>
 
       {loggedIn ? (
@@ -41,6 +40,7 @@ export default function SettingPage() {
             }}
             >Log out.</button>
 
+      <script src="/js/scripts.js"></script>
       <div class="container-fluid table-responsive pt-3">
         <table class="table table-sm no-wrap">
           <thead>
@@ -109,7 +109,6 @@ export default function SettingPage() {
         </table>
       </div>
 
-          
         </main>
       ) : (
         <main>
