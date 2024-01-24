@@ -40,14 +40,7 @@ async function initSettings() {
     createOptions("slDropdown",  ENV_['SL']);
     createOptions("indDropdown", ENV_['IND']);
     if (profiles.length >0) {
-        let appDropdown = elm('appDropdown');
-        profiles.forEach(element => {
-            let opt = document.createElement("option");
-            opt.setAttribute("value", element.name);
-            opt.textContent = element.name;
-            appDropdown.appendChild(opt);
-        });
-        appDropdown.addEventListener("change", reflectSetting);
+        createAppOptions(profiles);
     }
     elm('indDropdown').addEventListener("change", updateOptionPreset);
     // elm('btnPreview').addEventListener("click", previewSetting);
@@ -87,9 +80,11 @@ function reflectSetting() {
 
 function updateOptionPreset() {
     const indicator = elm('indDropdown').value;
-    const preset = ENV_['PSET'][indicator];
     elm('presetDropdown').textContent = '';
-    createOptions('presetDropdown', preset);
+    if (indicator) {
+        const preset = ENV_['PSET'][indicator];
+        createOptions('presetDropdown', preset);
+    }
 }
 
 function createOptions(dropdownId, list) {
@@ -109,6 +104,35 @@ function createBtnCheck(groupId, list) {
     `);
     arr.splice(3, 0, "<br/>");
     elm(groupId).innerHTML = `${arr.join('')}`;
+}
+
+function addNewProfile(name) {
+    insertProfile(name)
+        .then(createAppOptions(profiles))
+}
+
+function insertProfile(name){
+    let newProfile = {name:name,param:{}};
+    return new Promise(resolve => { 
+        newProfile.param = {account:'',breaker:false,symbols:[],timeframe:15,volume:0.01,rate_tp:0,rate_sl:0,indicator:''};
+        profiles.push(newProfile);
+        resolve(profiles);
+    });
+}
+
+function createAppOptions(apps) {
+    let appDropdown = elm('appDropdown');
+    return new Promise(resolve => {
+        appDropdown.innerHTML = '';
+        apps.forEach(element => {
+            let opt = document.createElement("option");
+            opt.setAttribute("value", element.name);
+            opt.textContent = element.name;
+            appDropdown.appendChild(opt);
+        });
+        appDropdown.addEventListener("change", reflectSetting);
+        resolve(appDropdown);
+    });
 }
 
 function generateSetting() {

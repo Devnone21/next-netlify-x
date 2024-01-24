@@ -7,17 +7,9 @@ import Footer from '@components/Footer'
 
 import netlifyAuth from '../../netlifyAuth.js'
 
-async function getSettings(host, id) {
-  const response = await fetch(host+'?k='+id);
-  const data = await response.json();
-  return data.profiles;
-}
-
 export default function SettingPage() {
   let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated)
   let [user, setUser] = useState(null)
-  const rayId = process.env.NEXT_PUBLIC_RAYID;
-  const apiUrl = process.env.NEXT_PUBLIC_APIURL;
   useEffect(() => {
     let isCurrent = true
     netlifyAuth.initialize((user) => {
