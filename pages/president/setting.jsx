@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-
+import Script from 'next/script'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 
@@ -31,6 +31,7 @@ export default function SettingPage() {
         <link rel="icon" href="/favicon.ico" />
         <link href="/css/style.min.css" rel="stylesheet" />
       </Head>
+      <Script src="/js/scripts.js" async />
 
       {loggedIn ? (
         <main>
@@ -40,7 +41,6 @@ export default function SettingPage() {
             }}
             >Log out.</button>
 
-      <script src="/js/scripts.js"></script>
       <div class="container-fluid table-responsive pt-3">
         <table class="table table-sm no-wrap">
           <thead>
