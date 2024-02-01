@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-
-import netlifyAuth from '../netlifyAuth.js'
-
 import Header from '@components/Header'
 import Footer from '@components/Footer'
+import netlifyAuth from '../../netlifyAuth.js'
 
 // const About = () => {
 //   return (
