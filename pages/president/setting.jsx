@@ -22,9 +22,9 @@ export default function SettingPage() {
       <Head>
         <title>Control Center X - President Only</title>
         <link rel="icon" href="/favicon.ico" />
-        <link href="css/style.min.css" rel="stylesheet" />
+        <link href="/css/style.min.css" rel="stylesheet" />
       </Head>
-      <Script src="js/scripts.js" async />
+      <Script src="/js/scripts.js" async />
 
       {loggedIn ? (
         <main>

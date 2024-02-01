@@ -8,17 +8,17 @@ import netlifyAuth from '../../netlifyAuth.js'
 
 export default function About() {
   let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated)
-  let [user, setUser] = useState(null)
-  useEffect(() => {
-    let isCurrent = true
-    netlifyAuth.initialize((user) => {
-      if (isCurrent) { setLoggedIn(!!user); setUser(user); }
-    })
-    return () => { isCurrent = false }
-  }, [])
+  // let [user, setUser] = useState(null)
+  // useEffect(() => {
+  //   let isCurrent = true
+  //   netlifyAuth.initialize((user) => {
+  //     if (isCurrent) { setLoggedIn(!!user); setUser(user); }
+  //   })
+  //   return () => { isCurrent = false }
+  // }, [])
   useEffect(() => {
     const script = document.createElement('script');
-    if (loggedIn) { script.src = "js/scripts.js" }
+    if (loggedIn) { script.src = "/js/scripts.js" }
     script.async = true;
     document.body.appendChild(script);
     
