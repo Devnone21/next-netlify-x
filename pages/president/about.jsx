@@ -16,17 +16,14 @@ export default function About() {
     })
     return () => { isCurrent = false }
   }, [])
-
-  if (loggedIn) {
-    useEffect(() => {
-      const script = document.createElement('script');
-      script.src = "js/scripts.js";
-      script.async = true;
-      document.body.appendChild(script);
-      
-      return () => { document.body.removeChild(script); }
-    }, []);
-  }
+  useEffect(() => {
+    const script = document.createElement('script');
+    if (loggedIn) { script.src = "js/scripts.js" }
+    script.async = true;
+    document.body.appendChild(script);
+    
+    return () => { document.body.removeChild(script); }
+  }, []);
 
   return (
     <div className="container">

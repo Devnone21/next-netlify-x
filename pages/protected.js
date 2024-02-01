@@ -30,6 +30,7 @@ export default function Protected() {
       <Head>
         <title>Control Center X</title>
         <link rel="icon" href="/favicon.ico" />
+        <link href="css/style.min.css" rel="stylesheet" />
       </Head>
 
       {loggedIn ? (
