@@ -8,21 +8,22 @@ import Footer from '@components/Footer'
 import netlifyAuth from '../../netlifyAuth.js'
 
 export default function SettingPage() {
-  let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated)
-  let [user, setUser] = useState(null)
-  useEffect(() => {
-    let isCurrent = true
-    netlifyAuth.initialize((user) => {
-      if (isCurrent) {
-        setLoggedIn(!!user)
-        setUser(user)
-      }
-    })
+  const loggedIn = netlifyAuth.isAuthenticated;
+  // let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated)
+  // let [user, setUser] = useState(null)
+  // useEffect(() => {
+  //   let isCurrent = true
+  //   netlifyAuth.initialize((user) => {
+  //     if (isCurrent) {
+  //       setLoggedIn(!!user)
+  //       setUser(user)
+  //     }
+  //   })
 
-    return () => {
-      isCurrent = false
-    }
-  }, [])
+  //   return () => {
+  //     isCurrent = false
+  //   }
+  // }, [])
 
   return (
     <div className="container">
@@ -36,10 +37,6 @@ export default function SettingPage() {
       {loggedIn ? (
         <main>
           <Header title={'Private Space™'} />
-          <button class="btn btn-danger" onClick={() => {
-              netlifyAuth.signout(() => {setLoggedIn(false); setUser(null);})
-            }}
-            >Log out.</button>
 
       <div class="container-fluid table-responsive pt-3">
         <table class="table table-sm no-wrap">
