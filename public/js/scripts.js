@@ -8,7 +8,7 @@ async function getSettings(host, id) {
 async function putSettings(host, id, value) {
   const comment = "From putSettings";
   const response = await fetch(host+'?k='+id, 
-        { method: "PUT", body: JSON.stringify({rayId: ENV_['RAYID'], _comment: comment, profiles: value}), 
+        { method: "PUT", body: JSON.stringify({rayId: atob(ENV_['RAYID']), _comment: comment, profiles: value}), 
         headers: {'Content-Type': 'application/json'} });
   const data = await response.json();
   console.log(`put: ${JSON.stringify(data)}`)
@@ -29,7 +29,8 @@ if (document.readyState !== 'loading') {
 }
 
 async function initSettings() {
-    profiles = await getSettings(ENV_['APIURL'], ENV_['RAYID']);
+    const api = 'https://' + atob(ENV_['API']) + '.workers.dev';
+    profiles = await getSettings(api, atob(ENV_['RAYID']));
     console.log(profiles);
     const selectClasses = "form-select shadow-none row border-top".split(' ');
     document.querySelectorAll('select').forEach(el=>el.classList.add(...selectClasses));
@@ -158,8 +159,9 @@ function previewSetting() {
 async function putSetting() {
     const param = generateSetting();
     const appIndex = elm('currentAppIndex').value;
+    const api = 'https://' + atob(ENV_['API']) + '.workers.dev';
     profiles[appIndex].param = param;
-    profiles = await putSettings(ENV_['APIURL'], ENV_['RAYID'], profiles);
+    profiles = await putSettings(api, atob(ENV_['RAYID']), profiles);
     console.log(profiles);
     reflectSetting();
 }
